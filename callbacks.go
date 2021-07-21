@@ -2,6 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"net/url"
+	"sort"
+	"strings"
+
 	"os/exec"
 
 	"fyne.io/fyne/v2"
@@ -13,6 +17,18 @@ import (
 var jsonData = []byte{}
 
 func onInfoClick() {
+	/*
+		go func() {
+			resp, _ := http.Get("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-Pia31MHkdochSVtOiP2P_k8rjBPtGl0Uvg&usqp=CAU")
+			img := canvas.NewImageFromReader(resp.Body, "afadas")
+
+			img.SetMinSize(fyne.Size{320, 240})
+			icont := container.NewGridWrap(fyne.Size{320, 240}, img)
+
+			content.Add(icont)
+		}()
+	*/
+
 	progress.Show()
 	defer progress.Hide()
 
@@ -31,9 +47,44 @@ func onInfoClick() {
 		return
 	}
 
-	f := videoData{}
-	json.Unmarshal(output, &f)
+	video := videoData{}
+	json.Unmarshal(output, &video)
+}
 
-	name := widget.NewLabel(f.Title)
-	content.Add(name)
+func getVideoThumbnail(vd videoData) thumbnail {
+
+	exts := []string{"jpg", "png", "bmp", "gif"}
+
+	thumbMainUrl := thumbnail{Url: vd.ThumbnailURL}
+
+	thumbs := append([]thumbnail{thumbMainUrl}, vd.Thumbnails...)
+
+	sort.Slice(
+		thumbs,
+		func(i, j int) bool { return thumbs[j].Width < thumbs[i].Width },
+	)
+
+	for _, thumb := range thumbs {
+		thurl, err := url.Parse(thumb.Url)
+
+		if err != nil {
+			continue
+		}
+
+		imageExt := strings.Split(thurl.Path, ".")
+		if len(imageExt) == 0 {
+			continue
+		}
+
+		ext := strings.ToLower(imageExt[len(imageExt)-1])
+
+		for _, ex := range exts {
+			if ext == ex {
+				return thumb
+			}
+		}
+
+	}
+
+	return thumbnail{}
 }
