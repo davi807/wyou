@@ -41,7 +41,7 @@ func onInfoClick() {
 		errorText := widget.NewLabel(string(output))
 		errorText.Wrapping = fyne.TextWrapWord
 
-		errContent := container.NewGridWrap(fyne.Size{APP_WIDTH * 0.8, APP_HEIGHT * 0.4}, errorText)
+		errContent := container.NewGridWrap(fyne.Size{Width: APP_WIDTH * 0.8, Height: APP_HEIGHT * 0.4}, errorText)
 
 		dialog.ShowCustom("Error: "+errCode.Error(), "Close", errContent, window)
 		return
