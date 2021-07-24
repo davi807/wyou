@@ -3,10 +3,11 @@ package main
 import (
 	"encoding/json"
 	"net/url"
+	"os"
+	"os/exec"
 	"sort"
 	"strings"
-
-	"os/exec"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -14,7 +15,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var jsonData = []byte{}
+var currentJsonFile string
+var jsonOutput = []byte{}
 
 func onInfoClick() {
 	/*
@@ -34,11 +36,11 @@ func onInfoClick() {
 
 	cmd := exec.Command(YT_NAME, "-J", "--no-playlist", urlBar.Text)
 
-	output, errCode := cmd.CombinedOutput()
+	jsonOutput, errCode := cmd.CombinedOutput()
 
 	if errCode != nil {
 
-		errorText := widget.NewLabel(string(output))
+		errorText := widget.NewLabel(string(jsonOutput))
 		errorText.Wrapping = fyne.TextWrapWord
 
 		errContent := container.NewGridWrap(fyne.Size{Width: APP_WIDTH * 0.8, Height: APP_HEIGHT * 0.4}, errorText)
@@ -48,7 +50,11 @@ func onInfoClick() {
 	}
 
 	video := videoData{}
-	json.Unmarshal(output, &video)
+	json.Unmarshal(jsonOutput, &video)
+
+	currentJsonFile = os.TempDir() + "/" + video.Id + time.Now().Format("150405.000") + ".tmp"
+	tmpF, _ := os.Create(currentJsonFile)
+	tmpF.Write(jsonOutput)
 }
 
 func getVideoThumbnail(vd videoData) thumbnail {
