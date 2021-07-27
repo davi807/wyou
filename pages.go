@@ -148,8 +148,6 @@ func SetWindowContent(cnt *fyne.Container) {
 /* format video duration */
 
 func formatDuration(d int) string {
-	// lib return video duration in seconds,
-	//convert go's  nanosecond format to seconds
 
 	res := ""
 	spr := ":"
