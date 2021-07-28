@@ -77,11 +77,15 @@ func createVideoPage() {
 	infoContainer.Add(widget.NewLabel("Provider: " + video.Extractor))
 
 	go func() {
+		loading := container.NewCenter(widget.NewLabel("Loading image..."))
+		imageContainer.Add(loading)
+
 		resp, _ := http.Get(getVideoThumbnail(video).Url)
 		img := canvas.NewImageFromReader(resp.Body, video.Id)
 
 		img.SetMinSize(fyne.NewSize(THUMBNAIL_WIDTH-5, THUMBNAIL_HEIGHT-5))
 
+		imageContainer.Remove(loading)
 		imageContainer.Add(img)
 	}()
 
@@ -161,8 +165,8 @@ func formatDuration(d int) string {
 		res += fmt.Sprintf("%d", hours) + spr
 	}
 
-	res += fmt.Sprintf("%2d", minutes) + spr
-	res += fmt.Sprintf("%2d", seconds)
+	res += fmt.Sprintf("%02d", minutes) + spr
+	res += fmt.Sprintf("%02d", seconds)
 
 	return res
 }
