@@ -47,7 +47,7 @@ func initStartPage() {
 	result = container.NewVBox()
 
 	resultContainer := container.NewVScroll(result)
-	resultContainer.SetMinSize(fyne.NewSize(0, 320))
+	resultContainer.SetMinSize(fyne.NewSize(0, APP_HEIGHT-120))
 
 	content = container.NewVBox(
 		titleInfo,
@@ -93,6 +93,12 @@ func createVideoPage() {
 	topBar.Add(infoContainer)
 
 	result.Add(topBar)
+
+	providerSpecials := createProviderSpecial()
+	if providerSpecials != nil {
+		result.Add(providerSpecials)
+	}
+
 	result.Show()
 }
 
