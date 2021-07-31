@@ -17,10 +17,13 @@ type format struct {
 	Size       uint64 `json:"filesize"`
 	Id         string `json:"format_id"`
 	Resolution string `json:"resolution"`
-	Format     string `json:"format"`
-	Acodec     string `json:"acodec"`
-	Vcodec     string `json:"vcodec"`
-	Ext        string `json:"ext"`
+
+	// Size in bytes
+	Format string `json:"format"`
+
+	Acodec string `json:"acodec"`
+	Vcodec string `json:"vcodec"`
+	Ext    string `json:"ext"`
 }
 
 type thumbnail struct {

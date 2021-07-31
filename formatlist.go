@@ -39,3 +39,53 @@ func createProviderSpecial() *fyne.Container {
 
 	return res
 }
+
+func createDownloadabelItems(formats []format) []*fyne.Container {
+	res := []*fyne.Container{}
+
+	// var addedInList bool
+
+	var formatsRow *fyne.Container
+	var hasUnpushed bool
+
+	// if youtube change order for audio+video item set on top place on list
+	if video.Extractor == "Youtube" {
+		formats[0] = formats[len(formats)-1]
+	}
+
+	for index := 0; index < len(formats); index++ {
+		formatItem := formats[index]
+
+		hasUnpushed = true
+		if index%2 == 0 {
+			formatsRow = container.NewGridWithColumns(2)
+		}
+
+		videoItem := container.NewVBox()
+
+		title := widget.NewLabel(formatItem.Ext + " / " + fmt.Sprintf("%.02fMB", float64(formatItem.Size)/1024/1024))
+		title.TextStyle.Bold = true
+		videoItem.Add(title)
+
+		codecText := "Audio: " + formatItem.Acodec + " ; video: " + formatItem.Vcodec
+		videoItem.Add(widget.NewLabel(codecText))
+
+		videoItem.Add(widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {
+			fmt.Println(index)
+		}))
+
+		formatsRow.Add(videoItem)
+
+		if index%2 == 1 {
+			res = append(res, formatsRow)
+			hasUnpushed = false
+		}
+
+	}
+
+	if hasUnpushed {
+		res = append(res, formatsRow)
+	}
+
+	return res
+}

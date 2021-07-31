@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"net/url"
 	"sort"
 	"strings"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -26,6 +26,7 @@ var progress fyne.Widget
 
 var resultContainer container.Scroll
 var result *fyne.Container
+var formatsContainer *fyne.Container
 
 /* Pages */
 
@@ -61,9 +62,25 @@ func initStartPage() {
 }
 
 func createVideoPage() {
+	result.Show()
+
 	result.Objects = []fyne.CanvasObject{}
 
+	//Create video informarion
 	topBar := container.NewGridWithColumns(2)
+	result.Add(topBar)
+
+	// Add extractor specific llinks
+	providerSpecials := createProviderSpecial()
+
+	if providerSpecials != nil {
+		result.Add(providerSpecials)
+	}
+
+	// Add download formats
+	formatsContainer = container.NewVBox()
+	result.Add(formatsContainer)
+
 	imageContainer := container.NewGridWrap(fyne.NewSize(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT))
 	infoContainer := container.NewVBox()
 
@@ -76,31 +93,36 @@ func createVideoPage() {
 	infoContainer.Add(widget.NewLabel("Duration: " + formatDuration(video.Duration)))
 	infoContainer.Add(widget.NewLabel("Provider: " + video.Extractor))
 
-	go func() {
-		loading := container.NewCenter(widget.NewLabel("Loading image..."))
-		imageContainer.Add(loading)
+	loading := container.NewCenter(widget.NewLabel("Loading image..."))
+	imageContainer.Add(loading)
 
-		resp, _ := http.Get(getVideoThumbnail(video).Url)
-		img := canvas.NewImageFromReader(resp.Body, video.Id)
+	renderThumbnail := func() {
 
+		resource, err := fyne.LoadResourceFromURLString(getVideoThumbnail(video).Url)
+		if err != nil {
+			return
+		}
+
+		img := canvas.NewImageFromResource(resource)
 		img.SetMinSize(fyne.NewSize(THUMBNAIL_WIDTH-5, THUMBNAIL_HEIGHT-5))
 
 		imageContainer.Remove(loading)
 		imageContainer.Add(img)
-	}()
+	}
 
 	topBar.Add(imageContainer)
 	topBar.Add(infoContainer)
 
-	result.Add(topBar)
-
-	providerSpecials := createProviderSpecial()
-	if providerSpecials != nil {
-		result.Add(providerSpecials)
+	for _, links := range createDownloadabelItems(video.Formats) {
+		formatsContainer.Add(links)
 	}
 
-	result.Show()
+	go time.AfterFunc(1*time.Second, renderThumbnail)
 }
+
+// Helper functions //
+
+/* Get video image*/
 
 func getVideoThumbnail(vd videoData) thumbnail {
 
@@ -142,10 +164,6 @@ func getVideoThumbnail(vd videoData) thumbnail {
 
 	return thumbnail{Url: THUMBNAIL_DEFAULT_URL}
 }
-
-// ===============
-// ===============
-// ===============
 
 /* Content set on window */
 
