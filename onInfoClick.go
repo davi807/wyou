@@ -13,7 +13,7 @@ import (
 )
 
 var currentJsonFile string
-var video = videoData{}
+var video videoData
 
 func onInfoClick() {
 	result.Hide()
@@ -36,6 +36,7 @@ func onInfoClick() {
 		return
 	}
 
+	video = videoData{}
 	json.Unmarshal(jsonOutput, &video)
 
 	currentJsonFile = os.TempDir() + "/" + video.Id + time.Now().Format("150405.000") + ".tmp"

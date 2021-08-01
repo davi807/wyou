@@ -62,6 +62,7 @@ func initStartPage() {
 }
 
 func createVideoPage() {
+	content.Refresh()
 	result.Show()
 
 	result.Objects = []fyne.CanvasObject{}
@@ -92,12 +93,12 @@ func createVideoPage() {
 
 	infoContainer.Add(widget.NewLabel("Duration: " + formatDuration(video.Duration)))
 	infoContainer.Add(widget.NewLabel("Provider: " + video.Extractor))
+	infoContainer.Add(createDirectDownload())
 
 	loading := container.NewCenter(widget.NewLabel("Loading image..."))
 	imageContainer.Add(loading)
 
 	renderThumbnail := func() {
-
 		resource, err := fyne.LoadResourceFromURLString(getVideoThumbnail(video).Url)
 		if err != nil {
 			return
@@ -107,7 +108,9 @@ func createVideoPage() {
 		img.SetMinSize(fyne.NewSize(THUMBNAIL_WIDTH-5, THUMBNAIL_HEIGHT-5))
 
 		imageContainer.Remove(loading)
+
 		imageContainer.Add(img)
+		imageContainer.Refresh()
 	}
 
 	topBar.Add(imageContainer)

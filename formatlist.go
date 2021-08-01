@@ -14,23 +14,18 @@ func createProviderSpecial() *fyne.Container {
 
 	switch video.Extractor {
 	case "Youtube":
-		// get best quality
-		vsize := float64(video.RequestedFormats[0].Size) / 1024 / 1024
-		asize := float64(video.RequestedFormats[1].Size) / 1024 / 1024
-		ext := video.RequestedFormats[0].Ext + "+" + video.RequestedFormats[1].Ext
-
-		downloadBtn := widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {})
-
-		best := widget.NewCard("Best quality", fmt.Sprintf("%.02fMB + %.02fMB,  %s", vsize, asize, ext), downloadBtn)
 
 		// download audio and save as mp3
 
 		downloadMp3 := widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {})
-		mp3 := widget.NewCard("Save as mp3", "Download audio and convert to mp3", downloadMp3)
+		mp3Title := widget.NewLabel("Save as mp3")
+		mp3Title.TextStyle.Bold = true
+		mp3Subtitle := widget.NewLabel("Download audio and convert to mp3")
+		mp3 := container.NewVBox(mp3Title, mp3Subtitle, downloadMp3)
 
 		// append buttons
 
-		row := container.NewGridWithColumns(2, best, mp3)
+		row := container.NewVBox(mp3)
 		res.Add(row)
 
 	default:
@@ -68,6 +63,8 @@ func createDownloadabelItems(formats []format) []*fyne.Container {
 		videoItem.Add(title)
 
 		codecText := "Audio: " + formatItem.Acodec + " ; video: " + formatItem.Vcodec
+		codecText += "\nFordmat: " + formatItem.Format
+
 		videoItem.Add(widget.NewLabel(codecText))
 
 		videoItem.Add(widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {
@@ -88,4 +85,10 @@ func createDownloadabelItems(formats []format) []*fyne.Container {
 	}
 
 	return res
+}
+
+func createDirectDownload() fyne.CanvasObject {
+	return widget.NewButtonWithIcon("Download best quality", theme.DownloadIcon(), func() {
+
+	})
 }

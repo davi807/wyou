@@ -4,7 +4,7 @@ const APP_TITLE = "WYou - video downloader"
 const APP_WIDTH = 680
 const APP_HEIGHT = 480
 
-const URLBAR_PLACEHOLDER = "Paste video url here, e.x. https://www.youtube.com/watch?v=hT_nvWreIhg"
+const URLBAR_PLACEHOLDER = "Paste video url here, e.x. https://www.youtube.com/watch?v=videoid"
 
 const YT_NAME = "youtube-dl"
 const FF_NAME = "ffmpeg"
