@@ -28,44 +28,30 @@ func init() {
 	}
 }
 
-// i am repeating myself :((
 func autoDownload() {
-	searchButton.Disable()
-	progress.Show()
-	result.Hide()
 
-	downloadProcess := exec.Command(YT_NAME,
-		"--load-info-json", currentJsonFile,
-		"--output", videoFileName,
-	)
-
-	out, _ := downloadProcess.CombinedOutput()
-
-	resText := widget.NewLabel(string(out))
-	resContent := container.NewGridWrap(fyne.Size{Width: APP_WIDTH * 0.8, Height: APP_HEIGHT * 0.4}, resText)
-
-	dialog.ShowCustom("Download finished", "Close", resContent, window)
-
-	result.Show()
-	progress.Hide()
-	searchButton.Enable()
-
+	onDownloadClick(format{Ext: video.Ext})
 }
 
-func onDownladClick(f format) {
+func onDownloadClick(f format) {
 	searchButton.Disable()
 	progress.Show()
 	result.Hide()
 
-	downloadProcess := exec.Command(YT_NAME,
+	arguments := []string{
 		"--load-info-json", currentJsonFile,
-		"--format", f.Id,
 		"--output", videoFileName,
-	)
+	}
 
-	out, _ := downloadProcess.CombinedOutput()
+	if f.Id != "" {
+		arguments = append(arguments, "--format", f.Id)
+	}
 
-	resText := widget.NewLabel(string(out))
+	downloadProcess := exec.Command(YT_NAME, arguments...)
+
+	downloadProcess.Run()
+
+	resText := widget.NewLabel("Check file:\n" + path.Join(downloadDir, video.Title+"."+f.Ext))
 	resContent := container.NewGridWrap(fyne.Size{Width: APP_WIDTH * 0.8, Height: APP_HEIGHT * 0.4}, resText)
 
 	dialog.ShowCustom("Download finished", "Close", resContent, window)

@@ -68,7 +68,7 @@ func createDownloadabelItems(formats []format) []*fyne.Container {
 		formatCard.Add(widget.NewLabel(codecText))
 
 		formatCard.Add(widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {
-			onDownladClick(formatItem)
+			onDownloadClick(formatItem)
 		}))
 
 		formatsRow.Add(formatCard)

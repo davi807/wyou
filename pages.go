@@ -62,8 +62,6 @@ func initStartPage() {
 }
 
 func createVideoPage() {
-	content.Refresh()
-
 	result.Objects = []fyne.CanvasObject{}
 
 	//Create video informarion
@@ -74,7 +72,7 @@ func createVideoPage() {
 	providerSpecials := createProviderSpecial()
 
 	if providerSpecials != nil {
-		result.Add(providerSpecials)
+		// result.Add(providerSpecials)
 	}
 
 	// Add download formats
@@ -121,6 +119,8 @@ func createVideoPage() {
 
 	go time.AfterFunc(1*time.Second, renderThumbnail)
 	searchButton.Enable()
+	result.Show()
+	// resultContainer.Refresh()
 }
 
 // Helper functions //

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"os/exec"
-	"time"
+	"path"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -18,6 +18,7 @@ var video videoData
 func onInfoClick() {
 	searchButton.Disable()
 
+	result.Hide()
 	progress.Show()
 	defer progress.Hide()
 
@@ -40,7 +41,7 @@ func onInfoClick() {
 	video = videoData{}
 	json.Unmarshal(jsonOutput, &video)
 
-	currentJsonFile = os.TempDir() + "/" + video.Id + time.Now().Format("150405.000") + ".tmp"
+	currentJsonFile = path.Join(os.TempDir(), "wyou-current-video-info.tmp")
 	tmpF, _ := os.Create(currentJsonFile)
 	tmpF.Write(jsonOutput)
 
