@@ -56,22 +56,22 @@ func createDownloadabelItems(formats []format) []*fyne.Container {
 			formatsRow = container.NewGridWithColumns(2)
 		}
 
-		videoItem := container.NewVBox()
+		formatCard := container.NewVBox()
 
 		title := widget.NewLabel(formatItem.Ext + " / " + fmt.Sprintf("%.02fMB", float64(formatItem.Size)/1024/1024))
 		title.TextStyle.Bold = true
-		videoItem.Add(title)
+		formatCard.Add(title)
 
 		codecText := "Audio: " + formatItem.Acodec + " ; video: " + formatItem.Vcodec
 		codecText += "\nFordmat: " + formatItem.Format
 
-		videoItem.Add(widget.NewLabel(codecText))
+		formatCard.Add(widget.NewLabel(codecText))
 
-		videoItem.Add(widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {
-			fmt.Println(index)
+		formatCard.Add(widget.NewButtonWithIcon("Download", theme.DownloadIcon(), func() {
+			onDownladClick(formatItem)
 		}))
 
-		formatsRow.Add(videoItem)
+		formatsRow.Add(formatCard)
 
 		if index%2 == 1 {
 			res = append(res, formatsRow)
@@ -89,6 +89,6 @@ func createDownloadabelItems(formats []format) []*fyne.Container {
 
 func createDirectDownload() fyne.CanvasObject {
 	return widget.NewButtonWithIcon("Download best quality", theme.DownloadIcon(), func() {
-
+		autoDownload()
 	})
 }

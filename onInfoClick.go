@@ -16,7 +16,7 @@ var currentJsonFile string
 var video videoData
 
 func onInfoClick() {
-	result.Hide()
+	searchButton.Disable()
 
 	progress.Show()
 	defer progress.Hide()
@@ -33,6 +33,7 @@ func onInfoClick() {
 		errContent := container.NewGridWrap(fyne.Size{Width: APP_WIDTH * 0.8, Height: APP_HEIGHT * 0.4}, errorText)
 
 		dialog.ShowCustom("Error: "+errCode.Error(), "Close", errContent, window)
+		searchButton.Enable()
 		return
 	}
 

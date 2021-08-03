@@ -47,8 +47,8 @@ func initStartPage() {
 
 	result = container.NewVBox()
 
-	resultContainer := container.NewVScroll(result)
-	resultContainer.SetMinSize(fyne.NewSize(0, APP_HEIGHT-120))
+	resultContainer := container.NewScroll(result)
+	resultContainer.SetMinSize(fyne.NewSize(APP_WIDTH-20, APP_HEIGHT-120))
 
 	content = container.NewVBox(
 		titleInfo,
@@ -63,7 +63,6 @@ func initStartPage() {
 
 func createVideoPage() {
 	content.Refresh()
-	result.Show()
 
 	result.Objects = []fyne.CanvasObject{}
 
@@ -121,6 +120,7 @@ func createVideoPage() {
 	}
 
 	go time.AfterFunc(1*time.Second, renderThumbnail)
+	searchButton.Enable()
 }
 
 // Helper functions //
