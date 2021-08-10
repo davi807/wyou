@@ -1,0 +1,14 @@
+.heading{
+    text-align: center;
+}
+.heading h4{
+    margin-bottom: 2px;
+}
+
+#link-address{
+    width: 100%;
+}
+
+.progress progress{
+    width: 100%;
+}
