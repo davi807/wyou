@@ -1,6 +1,6 @@
 This project should work as simple gui front-end for windows users, and help them to use youtube-dl.
 
-This branch is test version on `webview` engine , if you need `fyne` version pleas checkout on `fyne-based` branch
+This branch is test version on `web server` based application , if you need `fyne` version pleas checkout on `fyne-based` branch
 
 ---
 
