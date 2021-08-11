@@ -12,7 +12,9 @@ new Vue({
             if(this.url.length < 8 || this.inProgress){
                 return
             }
-            
+
+            this.video = {}
+
             this.inProgress = true
             fetch("/api/get-info", {
                 method: 'POST',
@@ -23,6 +25,20 @@ new Vue({
 
                 this.video =  JSON.parse(res)
                 console.log(this.video)
+            })
+            .finally(() => this.inProgress = false)
+        },
+        "download": function (id) {
+            if(this.inProgress){
+                return
+            }
+
+            this.inProgress = true
+
+
+            fetch("/api/download/"+id)
+            .then(res => {
+
             })
             .finally(() => this.inProgress = false)
         }

@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strings"
 )
 
 var address = "localhost"
@@ -35,5 +36,11 @@ func makeServerHnadlers() {
 		jsonResult := getInfo(string(url))
 
 		rw.Write([]byte(jsonResult))
+	})
+
+	http.HandleFunc("/api/download/", func(rw http.ResponseWriter, r *http.Request) {
+		path := strings.Split(r.URL.String(), "/")
+
+		println(path[len(path)-1])
 	})
 }
