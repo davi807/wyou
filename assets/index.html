@@ -22,8 +22,7 @@
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src="/js/vue.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="/js/vue.js"></script>
 
 
   <!-- Favicon
@@ -38,36 +37,37 @@
   <div id="main">
 
     <div class="container">
-        <div class="row">
-          <div class="heading column">
+        <div class="heading row">
+          <div class=" column">
             <h4>WYOU - Downloader</h4>
             <span>Friendly interface 
                 for downloading media files from youtube and other sites.</span>
           </div>
         </div>
-        <hr>
         <div class="row">
           <div class="three columns">
               <h5>Enter URL Here:</h5>
           </div>
           <div class="seven columns">
-              <input id="link-address" type="text" placeholder="e.x. https://www.youtube.com/watch?v=VIDEOID">
+              <input v-model="url" @keyup.enter="getInfo" id="link-address" type="text" placeholder="e.x. https://www.youtube.com/watch?v=VIDEOID">
           </div>
           <div class="two columns">
-            <button class="button-primary">Get Info</button>
+            <button @click="getInfo" class="button-primary">Get Info</button>
           </div>
         </div>
-        <div class="progress row">
+        <div v-cloak v-if="inProgress" class="progress row">
             <progress></progress>
         </div>
     </div>
+    <div v-cloak v-if="video.error" class="console container">
+      <span class="error" v-text="video.errorText"></span>
+    </div>
 <!--
-    <div class="console container"></div>
     <div class="result container"></div>
 -->
 
   </div>
 
-  
+  <script src="/js/main.js"></script>
 </body>
 </html>

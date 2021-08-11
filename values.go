@@ -1,13 +1,19 @@
 package main
 
-const APP_TITLE = "WYou - video downloader"
-const APP_WIDTH = 680
-const APP_HEIGHT = 480
+import (
+	"path/filepath"
+	"runtime"
+)
 
-const URLBAR_PLACEHOLDER = "Paste video url here, e.x. https://www.youtube.com/watch?v=videoid"
+var YT_NAME = "youtube-dl"
+var FF_NAME = "ffmpeg"
 
-const YT_NAME = "youtube-dl"
-const FF_NAME = "ffmpeg"
+func init() {
+	if runtime.GOOS == "windows" {
+		YT_NAME = filepath.Join("bin", YT_NAME)
+		FF_NAME = filepath.Join("bin", FF_NAME)
+	}
+}
 
 const THUMBNAIL_WIDTH = 336
 const THUMBNAIL_HEIGHT = 188

@@ -24,3 +24,16 @@ func prepareServer() {
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/", fs)
 }
+
+func makeServerHnadlers() {
+	http.HandleFunc("/api/get-info", func(rw http.ResponseWriter, r *http.Request) {
+
+		body := make([]byte, 256)
+		n, _ := r.Body.Read(body)
+		url := string(body[:n])
+
+		jsonResult := getInfo(string(url))
+
+		rw.Write([]byte(jsonResult))
+	})
+}
