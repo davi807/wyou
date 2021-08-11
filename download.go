@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"time"
 )
 
 var downloadDir string
@@ -23,10 +24,7 @@ func init() {
 	}
 }
 
-func download(format string, info ...string) string {
-	title := info[0]
-	extension := info[1]
-
+func download(format string) {
 	arguments := []string{
 		"--load-info-json", currentJsonFile,
 		"--output", videoFileName,
@@ -38,7 +36,31 @@ func download(format string, info ...string) string {
 
 	downloadProcess := exec.Command(YT_NAME, arguments...)
 
-	downloadProcess.Run()
+	stdOut, err := downloadProcess.StdoutPipe()
 
-	return filepath.Join(downloadDir, title+"."+extension)
+	if err != nil {
+		return
+	}
+
+	downloadProcess.Start()
+
+	for downloadProcess.ProcessState.ExitCode() == -1 {
+		buffer := make([]byte, 256)
+
+		n, err := stdOut.Read(buffer)
+
+		if err != nil {
+			break
+		}
+
+		// fmt.Println()
+		if n > 0 {
+			stdOutChannel <- buffer[:n]
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+	downloadProcess.Wait()
+	println("end")
+
 }

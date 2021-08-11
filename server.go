@@ -10,6 +10,7 @@ import (
 
 var address = "localhost"
 var port string
+var stdOutChannel chan []byte
 
 func prepareServer() {
 	// getting any free port
@@ -40,7 +41,15 @@ func makeServerHnadlers() {
 
 	http.HandleFunc("/api/download/", func(rw http.ResponseWriter, r *http.Request) {
 		path := strings.Split(r.URL.String(), "/")
+		format := path[len(path)-1]
+		stdOutChannel = make(chan []byte)
+		go download(format)
 
-		println(path[len(path)-1])
+		rw.Header().Add("Content-Type", "application/octet-stream")
+		rw.Write([]byte("starting..."))
+		for row := range stdOutChannel {
+			println(string(row))
+			rw.Write(row)
+		}
 	})
 }
