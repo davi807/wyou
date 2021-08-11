@@ -15,9 +15,9 @@ func init() {
 	}
 }
 
-const THUMBNAIL_WIDTH = 336
-const THUMBNAIL_HEIGHT = 188
+// const THUMBNAIL_WIDTH = 336
+// const THUMBNAIL_HEIGHT = 188
 
-const THUMBNAIL_DEFAULT_URL = "https://via.placeholder.com/336x188.png?text=Image+not+found"
+// const THUMBNAIL_DEFAULT_URL = "https://via.placeholder.com/336x188.png?text=Image+not+found"
 
 const OUTPUT_FILE_NAME = "%(title)s.%(ext)s"

@@ -9,12 +9,17 @@
 .heading h4{
     margin-bottom: 2px;
 }
-
+.hint{
+    position: relative;
+    top: 10;
+}
 #link-address{
     width: 100%;
 }
 
-.progress progress{
+.progress progress,
+.best-download
+{
     width: 100%;
 }
 
@@ -22,4 +27,14 @@
     background-color: #181818;
     color: #ffe;
     padding: 15px;
+    line-height: 1.2em;
+}
+
+.video-title{
+    text-align: center;
+}
+
+.video-thumbnail{
+    max-width: 100%;
+    max-height: 188px;
 }

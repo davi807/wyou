@@ -46,25 +46,49 @@
         </div>
         <div class="row">
           <div class="three columns">
-              <h5>Enter URL Here:</h5>
+              <span class="hint">Enter URL Here:</strong>
           </div>
           <div class="seven columns">
               <input v-model="url" @keyup.enter="getInfo" id="link-address" type="text" placeholder="e.x. https://www.youtube.com/watch?v=VIDEOID">
           </div>
           <div class="two columns">
-            <button @click="getInfo" class="button-primary">Get Info</button>
+            <button @click="getInfo" class="get-info button-primary">Get Info</button>
           </div>
         </div>
         <div v-cloak v-if="inProgress" class="progress row">
             <progress></progress>
         </div>
     </div>
+
     <div v-cloak v-if="video.error" class="console container">
       <span class="error" v-text="video.errorText"></span>
     </div>
-<!--
-    <div class="result container"></div>
--->
+
+    <div v-cloak v-if="video.id" class="result container">
+      <div class="rov">
+        <div class="imagecontainer five columns">
+          <img class="video-thumbnail" :src="videoThumbnail">
+        </div>
+        <div class="seven columns">
+          <h6 class="video-title"><strong>{{video.title}}</strong></h6>
+          <table class="u-full-width">
+            <tbody>
+              <tr>
+                <td>Duration</td>
+                <td>{{videoDuration}}</td>
+              </tr>
+              <tr>
+                <td>Provided by</td>
+                <td>{{video.extractor_key}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <button class="best-download button-primary">Download best quality</button>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
