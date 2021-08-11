@@ -62,5 +62,6 @@ func download(format string) {
 	}
 	downloadProcess.Wait()
 	println("end")
+	close(stdOutChannel)
 
 }

@@ -46,9 +46,8 @@ func makeServerHnadlers() {
 		go download(format)
 
 		rw.Header().Add("Content-Type", "application/octet-stream")
-		rw.Write([]byte("starting..."))
+
 		for row := range stdOutChannel {
-			println(string(row))
 			rw.Write(row)
 		}
 	})
