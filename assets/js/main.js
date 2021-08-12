@@ -35,12 +35,11 @@ new Vue({
 
             this.inProgress = true
 
-
-            fetch("/api/download/"+id)
-            .then(res => {
-
-            })
-            .finally(() => this.inProgress = false)
+            let stream = new EventSource("/api/download/"+id)
+            
+            stream.onmessage = event => console.log(event.data)
+            
+            // .finally(() => this.inProgress = false)
         }
     },
     computed: {

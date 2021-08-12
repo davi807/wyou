@@ -61,7 +61,6 @@ func download(format string) {
 		time.Sleep(1 * time.Second)
 	}
 	downloadProcess.Wait()
-	println("end")
 	close(stdOutChannel)
 
 }
