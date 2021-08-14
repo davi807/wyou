@@ -54,16 +54,11 @@ func makeServerHnadlers() {
 		stdOutChannel = make(chan []byte)
 		go download(format)
 
-		rw.Header().Set("Content-Type", "text/event-stream")
-
 		flusher := rw.(http.Flusher)
 
 		for row := range stdOutChannel {
-			end := []byte("\n\n")
-			rw.Write(append([]byte("data:"), row...))
-			rw.Write(end)
+			rw.Write(row)
 			flusher.Flush()
 		}
-		rw.Write([]byte("data:close\n\n"))
 	})
 }

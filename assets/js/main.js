@@ -24,7 +24,7 @@ new Vue({
             .then(res => {
 
                 this.video =  JSON.parse(res)
-                console.log(this.video)
+                //console.log(this.video)
             })
             .finally(() => this.inProgress = false)
         },
@@ -35,11 +35,25 @@ new Vue({
 
             this.inProgress = true
 
-            let stream = new EventSource("/api/download/"+id)
+            let total = 0
+
+            let stream = new XMLHttpRequest()
+
+            stream.open("GET", "/api/download/best", true)
             
-            stream.onmessage = event => console.log(event.data)
-            
-            // .finally(() => this.inProgress = false)
+            stream.onprogress = function (event) {
+                if(event.loaded){
+                    this.inProgress = false
+                    return
+                }
+                total = event.total 
+                console.log("PROGRESS:", stream.responseText)
+            }
+
+  
+
+            stream.send()
+
         }
     },
     computed: {
