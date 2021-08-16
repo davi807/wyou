@@ -35,17 +35,18 @@ new Vue({
                 return
             }
 
-            this.inProgress = true
+            let self = this 
+            self.inProgress = true
 
             let total = 0
 
             let stream = new XMLHttpRequest()
 
-            stream.open("GET", "/api/download/best", true)
+            stream.open("GET", "/api/download/"+id, true)
             
             stream.onprogress = function (event) {
                 if(event.loaded){
-                    this.inProgress = false
+                    self.inProgress = false
                     return
                 }
                 total = event.total 
