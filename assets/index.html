@@ -87,8 +87,46 @@
           <button @click="download('best')" class="best-download button-primary">Download best quality</button>
         </div>
       </div>
+
+
+      <div class="row">
+        <div class="three columns format" 
+            v-for="(format, index) in video.formats"
+            :class="{'no-margl': index % 4 == 0}">
+          <div class="format-name">{{format.format}}</div>
+          
+          <div class="u-full-width">
+            
+              <div>
+                <span>Size</span>
+                <span>{{format.filesize}}</span>
+              </div>
+              <div>
+                <span>Extension</span>
+                <span>{{format.ext}}</span>
+              </div>
+              <div>
+                <span>Video</span>
+                <span>{{format.vcodec}}</span>
+              </div>
+              <div>
+                <span>Audio</span>
+                <span>{{format.acodec}}</span>
+              </div>
+              <div>
+                <span>Extension</span>
+                <span>{{format.ext}}</span>
+              </div>
+            </div>
+          <button @click="download('{{format.id}}')" class="u-full-width button format-download">download</button>
+        </div>
+      </div>
+
     </div>
+
   </div>
+
+
 
   <script src="/js/main.js"></script>
 </body>

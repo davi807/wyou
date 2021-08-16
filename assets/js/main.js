@@ -22,9 +22,11 @@ new Vue({
             })
             .then(resp => resp.text())
             .then(res => {
-
-                this.video =  JSON.parse(res)
-                //console.log(this.video)
+                let video =  JSON.parse(res)
+                if(video.formats){
+                    video.formats = video.formats.sort((a, b) => b.filesize - a.filesize)
+                }
+                this.video = video
             })
             .finally(() => this.inProgress = false)
         },

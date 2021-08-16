@@ -43,3 +43,32 @@
     max-width: 100%;
     max-height: 188px;
 }
+
+.format{
+    background-color: rgb(241, 241, 241);
+    margin-bottom: 3px;
+    padding-left: 3px;
+}
+
+.format-name{
+    text-align: center;
+    font-weight: bold;
+}
+
+.format-download{
+    background: rgb(169, 201, 220);
+}
+
+
+@media (max-width: 550px) {
+    .get-info{
+        width:100%;
+    }
+}
+
+
+@media (min-width: 550px) {
+    .no-margl{
+        margin-left: 0;
+    }
+}
