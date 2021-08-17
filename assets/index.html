@@ -60,9 +60,14 @@
         </div>
     </div>
 
-    <div v-cloak v-if="video.error" class="console container">
+    <div v-cloak v-if="video.error " class="console container">
       <span class="error" v-text="video.errorText"></span>
     </div>
+
+    <div v-cloak v-if="downloading" class="downloading console container">
+      <div  v-text="progressText"></div>
+    </div>
+
 
     <div v-cloak v-if="video.id" class="result container">
       <div class="row">

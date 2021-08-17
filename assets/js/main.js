@@ -6,6 +6,8 @@ new Vue({
         url: "",
         inProgress: false,
         filters: {av: true, ao: true, vo: true},
+        downloading: false,
+        progressText: "",
         video: {}
     },
     methods: {
@@ -44,18 +46,21 @@ new Vue({
             let stream = new XMLHttpRequest()
 
             stream.open("GET", "/api/download/"+id, true)
-            
-            stream.onprogress = function (event) {
-                responseText = stream.responseText.substring(total) 
+
+            self.progressText = ""
+            self.downloading = true
+
+            stream.onprogress = function () {
+                let responseText = stream.responseText.substring(total) 
                 total = stream.responseText.length 
 
-                console.log(responseText)
+                self.progressText += (responseText)
                 if(responseText.includes("##DONE##")){
                     self.inProgress = false
+                    // self.downloading.text = ""
                 }
+                self.$nextTick()
             }
-
-  
 
             stream.send()
 
@@ -64,12 +69,9 @@ new Vue({
             if(!this.video.formatsBackup){
                 this.video.formatsBackup = this.video.formats
             }
-            console.log(this.video.formats.length)
 
             this.video.formats = []
 
-
-            console.log("0=", this.video.formats.length)
 
 
             this.video.formatsBackup.forEach(format => {
@@ -80,8 +82,6 @@ new Vue({
                     this.video.formats.push(format)
                 }
             })
-
-            console.log(this.video.formats.length)
 
         }
     },
@@ -119,7 +119,6 @@ new Vue({
                         maxIndex = i
                     }
                 });
-                console.log(this.video.thumbnails[maxIndex])
                 return this.video.thumbnails[maxIndex].url
             }
             return this.video.thumbnail || THUMBNAIL_DEFAULT_URL

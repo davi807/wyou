@@ -35,6 +35,10 @@
     line-height: 1.4em;
 }
 
+.downloading{
+    margin-bottom: 10px;
+}
+
 .video-title{
     text-align: center;
 }
