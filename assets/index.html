@@ -49,10 +49,10 @@
               <span class="hint">Enter URL Here:</strong>
           </div>
           <div class="seven columns">
-              <input v-model="url" @keyup.enter="getInfo" id="link-address" type="text" placeholder="e.x. https://www.youtube.com/watch?v=VIDEOID">
+              <input v-model="url" :disabled="inProgress" @keyup.enter="getInfo" id="link-address" type="text" placeholder="e.x. https://www.youtube.com/watch?v=VIDEOID">
           </div>
           <div class="two columns">
-            <button @click="getInfo" class="get-info button-primary">Get Info</button>
+            <button @click="getInfo" :disabled="inProgress" class="get-info button-primary">Get Info</button>
           </div>
         </div>
         <div v-cloak v-if="inProgress" class="progress row">
@@ -84,7 +84,7 @@
             </tbody>
           </table>
           <br>
-          <button @click="download('best')" class="best-download button-primary">Download best quality</button>
+          <button :disabled="inProgress" @click="download('best')" class="best-download button-primary">Download best quality</button>
         </div>
       </div>
 
@@ -138,7 +138,7 @@
                 <span>{{format.ext}}</span>
               </div>
             </div>
-          <button @click="download(format.format_id)" class="u-full-width button format-download">download</button>
+          <button :disabled="inProgress" @click="download(format.format_id)" class="u-full-width button format-download">download</button>
         </div>
         <div class="alg-center" v-if="video.formats.length == 0">
           No result <br>

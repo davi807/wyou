@@ -41,18 +41,18 @@ new Vue({
             self.inProgress = true
 
             let total = 0
-
             let stream = new XMLHttpRequest()
 
             stream.open("GET", "/api/download/"+id, true)
             
             stream.onprogress = function (event) {
-                if(event.loaded){
+                responseText = stream.responseText.substring(total) 
+                total = stream.responseText.length 
+
+                console.log(responseText)
+                if(responseText.includes("##DONE##")){
                     self.inProgress = false
-                    return
                 }
-                total = event.total 
-                console.log("PROGRESS:", stream.responseText)
             }
 
   

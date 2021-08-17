@@ -60,5 +60,6 @@ func makeServerHnadlers() {
 			rw.Write(row)
 			flusher.Flush()
 		}
+		rw.Write([]byte("##DONE##"))
 	})
 }
