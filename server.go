@@ -10,7 +10,6 @@ import (
 
 var address = "localhost"
 var port string
-var stdOutChannel chan []byte
 var downloading bool
 
 func prepareServer() {
@@ -41,10 +40,12 @@ func makeServerHnadlers() {
 	})
 
 	http.HandleFunc("/api/download/", func(rw http.ResponseWriter, r *http.Request) {
-		if downloading {
-			rw.Write([]byte("Current download in progress.\n Open this progrem agen, to download other link \n ##DONE##"))
-			return
-		}
+		// if downloading {
+		// 	rw.Write([]byte("Current download in progress.\n Open this progrem agen, to download other link \n ##DONE##"))
+		// 	return
+		// }
+		var stdOutChannel chan []byte
+
 		downloading = true
 		defer func() {
 			downloading = false
@@ -53,7 +54,7 @@ func makeServerHnadlers() {
 		path := strings.Split(r.URL.String(), "/")
 		format := path[len(path)-1]
 		stdOutChannel = make(chan []byte)
-		go download(format)
+		go download(format, stdOutChannel)
 
 		flusher := rw.(http.Flusher)
 

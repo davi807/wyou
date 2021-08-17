@@ -24,7 +24,7 @@ func init() {
 	}
 }
 
-func download(format string) {
+func download(format string, stdOutChannel chan []byte) {
 	arguments := []string{
 		"--load-info-json", currentJsonFile,
 		"--output", videoFileName,

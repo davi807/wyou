@@ -63,7 +63,7 @@ new Vue({
             }
 
             stream.send()
-
+            window.scroll(0, 0);  
         },
         "updateFormats": function(){
             if(!this.video.formatsBackup){
