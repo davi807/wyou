@@ -42,7 +42,7 @@ func makeServerHnadlers() {
 
 	http.HandleFunc("/api/download/", func(rw http.ResponseWriter, r *http.Request) {
 		if downloading {
-			rw.Write([]byte("Current download in progress\n open this progrem agen to download other link \n ##DONE##"))
+			rw.Write([]byte("Current download in progress.\n Open this progrem agen, to download other link \n ##DONE##"))
 			return
 		}
 		downloading = true
