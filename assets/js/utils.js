@@ -22,3 +22,21 @@ function orderAndSetType(formats) {
     });
     return [].concat(audioVideoFormats, audioOnlyFormats, videoOnlyFormats)
 }
+
+
+function Parser(){
+    this.destination
+    this.warn
+    this.progress = 0
+    
+    this.parse = function (row) {
+    
+        if(0){}
+        if(!this.destination){
+            let dest = row.match(/\[download\] Destination: (.*)/)
+            if(dest){
+                this.destination = dest[1]
+            }
+        }
+    }
+}

@@ -43,6 +43,7 @@ new Vue({
             self.inProgress = true
 
             let total = 0
+            let parser = new Parser()
             let stream = new XMLHttpRequest()
 
             stream.open("GET", "/api/download/"+id, true)
@@ -50,14 +51,22 @@ new Vue({
             self.progressText = ""
             self.downloading = true
 
+
+
             stream.onprogress = function () {
                 let responseText = stream.responseText.substring(total) 
                 total = stream.responseText.length 
 
-                self.progressText += (responseText)
+
+                parser.parse(responseText)
+
+                self.$refs.progressText.innerText = "" +
+                    "Destination:      " + parser.destination +
+                    "Progress:         " + "parser.progress"
+
                 if(responseText.includes("##DONE##")){
                     self.inProgress = false
-                    // self.downloading.text = ""
+                    // self.downloading = false
                 }
                 self.$nextTick()
             }
