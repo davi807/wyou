@@ -5,6 +5,7 @@ new Vue({
     data: {
         url: "",
         inProgress: false,
+        filters: {av: true, ao: true, vo: true},
         video: {}
     },
     methods: {
@@ -25,6 +26,7 @@ new Vue({
                 let video =  JSON.parse(res)
                 if(video.formats){
                     video.formats = video.formats.sort((a, b) => b.filesize - a.filesize)
+                    video.formats = orderAndSetType(video.formats)
                 }
                 this.video = video
             })
@@ -56,6 +58,30 @@ new Vue({
   
 
             stream.send()
+
+        },
+        "updateFormats": function(){
+            if(!this.video.formatsBackup){
+                this.video.formatsBackup = this.video.formats
+            }
+            console.log(this.video.formats.length)
+
+            this.video.formats = []
+
+
+            console.log("0=", this.video.formats.length)
+
+
+            this.video.formatsBackup.forEach(format => {
+                if( (format.type === audiovideo && this.filters.av) || 
+                    (format.type === audioonly && this.filters.ao) ||
+                    (format.type === videoonly && this.filters.vo)
+                ){
+                    this.video.formats.push(format)
+                }
+            })
+
+            console.log(this.video.formats.length)
 
         }
     },

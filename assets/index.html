@@ -65,7 +65,7 @@
     </div>
 
     <div v-cloak v-if="video.id" class="result container">
-      <div class="rov">
+      <div class="row">
         <div class="imagecontainer five columns">
           <img class="video-thumbnail" :src="videoThumbnail">
         </div>
@@ -88,6 +88,26 @@
         </div>
       </div>
 
+      <div class="row filters">
+        <div class="two columns">
+          <span>Show</span>
+        </div>
+        <div class="ten columns">
+          <label>
+            <input @change="updateFormats" v-model="filters.av" type="checkbox">
+            Video and audio
+          </label> |
+          <label>
+            <input @change="updateFormats" v-model="filters.ao" type="checkbox">
+            Audio only
+          </label> |
+          <label>
+            <input @change="updateFormats" v-model="filters.vo" type="checkbox">
+            Video only
+          </label>
+        </div>
+
+      </div>
 
       <div class="row">
         <div class="three columns format" 
@@ -120,6 +140,10 @@
             </div>
           <button @click="download(format.format_id)" class="u-full-width button format-download">download</button>
         </div>
+        <div class="alg-center" v-if="video.formats.length == 0">
+          No result <br>
+          Select nnore filters
+        </div>
       </div>
 
     </div>
@@ -128,6 +152,7 @@
 
 
 
+  <script src="/js/utils.js"></script>
   <script src="/js/main.js"></script>
 </body>
 </html>

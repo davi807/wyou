@@ -59,6 +59,14 @@
     background: rgb(169, 201, 220);
 }
 
+.filters label{
+    display: inline-block;
+}
+
+.alg-center{
+    text-align: center;
+}
+
 
 @media (max-width: 550px) {
     .get-info{
