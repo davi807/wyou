@@ -25,18 +25,29 @@ function orderAndSetType(formats) {
 
 
 function Parser(){
-    this.destination
-    this.warn
-    this.progress = 0
+    let dloadDelim = "[download]"
+
+
+    this.rows
+    this.buffer = ""
+    this.text = ""
+
     
     this.parse = function (row) {
-    
-        if(0){}
-        if(!this.destination){
-            let dest = row.match(/\[download\] Destination: (.*)/)
-            if(dest){
-                this.destination = dest[1]
+        
+        let text = ""
+        let rows = this.buffer.split("\n")
+        this.buffer += row
+
+        rows.forEach(line => {
+            if(line.includes(dloadDelim)){
+                let index = line.lastIndexOf(dloadDelim)
+                line = line.substr(index)
             }
-        }
+            text += line + "\n"
+        })
+
+        this.text = text
+        console.log(45455)
     }
 }

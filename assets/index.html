@@ -65,8 +65,9 @@
     </div>
 
     <div v-cloak v-if="downloading" class="downloading console container">
-      <div class="alg-center">Downloading, please wait...</div>
-      <div ref="progressText"></div>
+      <div class="alg-center" v-if="inProgress">Downloading, please wait...</div>
+      <div class="alg-center" v-else>Download finish!</div>
+      <pre class="response-test" ref="progressText"></pre>
     </div>
 
 

@@ -39,6 +39,11 @@
     margin-bottom: 10px;
 }
 
+.response-test{
+    overflow-x: hidden;
+    white-space: pre-wrap;
+}
+
 .video-title{
     text-align: center;
 }

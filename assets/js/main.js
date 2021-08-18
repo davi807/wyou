@@ -16,7 +16,7 @@ new Vue({
                 return
             }
 
-            this.video = {}
+            this.reset()
 
             this.inProgress = true
             fetch("/api/get-info", {
@@ -39,9 +39,9 @@ new Vue({
                 return
             }
 
-            let self = this 
-            self.inProgress = true
+            this.inProgress = true
 
+            let self = this 
             let total = 0
             let parser = new Parser()
             let stream = new XMLHttpRequest()
@@ -51,24 +51,16 @@ new Vue({
             self.progressText = ""
             self.downloading = true
 
-
-
             stream.onprogress = function () {
                 let responseText = stream.responseText.substring(total) 
                 total = stream.responseText.length 
 
-
                 parser.parse(responseText)
-
-                self.$refs.progressText.innerText = "" +
-                    "Destination:      " + parser.destination +
-                    "Progress:         " + "parser.progress"
+                self.$refs.progressText.innerText = parser.text
 
                 if(responseText.includes("##DONE##")){
                     self.inProgress = false
-                    // self.downloading = false
                 }
-                self.$nextTick()
             }
 
             stream.send()
@@ -81,8 +73,6 @@ new Vue({
 
             this.video.formats = []
 
-
-
             this.video.formatsBackup.forEach(format => {
                 if( (format.type === audiovideo && this.filters.av) || 
                     (format.type === audioonly && this.filters.ao) ||
@@ -92,7 +82,13 @@ new Vue({
                 }
             })
 
-        }
+        },
+        "reset": function(){
+            this.filters = {av: true, ao: true, vo: true},
+            this.downloading = false,
+            this.progressText = "",
+            this.video = {}
+        },
     },
     computed: {
         videoDuration() {
