@@ -83,7 +83,6 @@ html{
 }
 
 button:disabled, input:disabled{
-    pointer: not-allowed;
     opacity: 0.4;
 }
 
