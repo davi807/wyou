@@ -136,7 +136,7 @@ function updateDL(){
     let container = document.querySelector("#update-info")
     container.innerText = "Updating, please wait..."
 
-    let stream = XMLHttpRequest("/update")
+    let stream = new XMLHttpRequest()
 
     let done
 
@@ -147,8 +147,11 @@ function updateDL(){
         if(stream.responseText.includes("##DONE##")){
             container.innerText = "Update finished!"
             done = true
+            alert(stream.responseText)
         }
     }
 
-    stream.open()
+    stream.open("GET", "/api/update/", true)
+    stream.send()
+
 }

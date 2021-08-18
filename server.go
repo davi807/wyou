@@ -40,10 +40,7 @@ func makeServerHnadlers() {
 	})
 
 	http.HandleFunc("/api/download/", func(rw http.ResponseWriter, r *http.Request) {
-		// if downloading {
-		// 	rw.Write([]byte("Current download in progress.\n Open this progrem agen, to download other link \n ##DONE##"))
-		// 	return
-		// }
+
 		var stdOutChannel chan []byte
 
 		downloading = true
@@ -62,6 +59,14 @@ func makeServerHnadlers() {
 			rw.Write(row)
 			flusher.Flush()
 		}
+		rw.Write([]byte("##DONE##"))
+	})
+
+	http.HandleFunc("/api/update/", func(rw http.ResponseWriter, r *http.Request) {
+
+		res := update()
+
+		rw.Write(res)
 		rw.Write([]byte("##DONE##"))
 	})
 }
