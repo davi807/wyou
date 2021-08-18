@@ -126,7 +126,7 @@
             
               <div>
                 <span>Size</span>
-                <span>{{format.filesize}}</span>
+                <span>{{(format.filesize/1024/1024).toFixed(2)}} MB</span>
               </div>
               <div>
                 <span>Extension</span>
@@ -158,6 +158,12 @@
   </div>
 
 
+  <div class="footer alg-center">
+    If problems with download, <a href="#" id="update-btn" onclick="updateDL()">try update</a> <span id="update-info"></span> <br>
+    /C/ 2021.
+    Support us, donate with ethereum: <strong>0x81016a4c776d2dc9c354d8E39C7049bD9D315b34</strong> <br>
+    Powered by <a target="_blank" href="https://youtube-dl.org">youtube-dl</a> and <a target="_blank" href="https://www.ffmpeg.org">ffmpeg</a>
+  </div>
 
   <script src="/js/utils.js"></script>
   <script src="/js/main.js"></script>

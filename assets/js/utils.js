@@ -40,14 +40,20 @@ function Parser(){
         this.buffer += row
 
         rows.forEach(line => {
-            if(line.includes(dloadDelim)){
-                let index = line.lastIndexOf(dloadDelim)
-                line = line.substr(index)
+            if(line.includes(dloadDelim) && line.includes("%")){
+                let chunks = line.split('[')
+                line = ""
+                for(let i = chunks.length -1; i != 0; i -= 1){
+                    if(chunks[i].includes(" ETA ") || chunks[i].includes("100%")){
+                        line = "["+ chunks[i]
+                        break
+                    }
+                } 
+
             }
             text += line + "\n"
         })
 
         this.text = text
-        console.log(45455)
     }
 }

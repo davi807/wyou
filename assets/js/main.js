@@ -130,3 +130,25 @@ new Vue({
         }
     }
 })
+
+function updateDL(){
+    document.querySelector("#update-btn").remove()
+    let container = document.querySelector("#update-info")
+    container.innerText = "Updating, please wait..."
+
+    let stream = XMLHttpRequest("/update")
+
+    let done
+
+    stream.onprogress = function (event) {
+        if(done){
+            return
+        }
+        if(stream.responseText.includes("##DONE##")){
+            container.innerText = "Update finished!"
+            done = true
+        }
+    }
+
+    stream.open()
+}
