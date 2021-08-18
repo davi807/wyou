@@ -4,9 +4,12 @@ This branch is test version on `web server` based application , if you need `fyn
 
 ---
 
-Currently it is working on linux, but not good is rendering quality and scroll.
-It can download videos from websites 
-BUT
-!! not integration on windows
+Currently it is working on linux and windows.
+It creates web server and automaticly open that server in default browser.
 
-I used golang's fyne framework, may be I should change it and use webview, I am not sure.
+### For Windows
+
+* compile project and get `wyou.exe` file
+* create folder `bin` in same folder with `wyou.exe` and `assets` folder
+* paste `youtube-dl.exe` and `ffmpeg.exe` in `bin` folder
+* run `wyou.exe` file 
